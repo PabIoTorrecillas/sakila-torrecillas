@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Redireccionar a login si se accede a la raíz
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ login.php [L]

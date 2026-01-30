@@ -1,0 +1,37 @@
+# Habilitar reescritura de URL
+RewriteEngine On
+
+# Redireccionar a login si se accede a la raíz
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^(.*)$ login.php [L]
+
+# Proteger archivos de configuración
+<FilesMatch "^(config\.php|setup\.sql)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Deshabilitar listado de directorios
+Options -Indexes
+
+# Protección contra clickjacking
+Header always set X-Frame-Options "SAMEORIGIN"
+
+# Protección XSS
+Header set X-XSS-Protection "1; mode=block"
+
+# Prevenir MIME type sniffing
+Header set X-Content-Type-Options "nosniff"
+
+# Configurar tiempo de sesión
+php_value session.gc_maxlifetime 3600
+php_value session.cookie_lifetime 3600
+
+# Límites de tamaño de subida (ajustar según necesidad)
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+
+# Mostrar errores solo en desarrollo (comentar en producción)
+# php_flag display_errors on
+# php_value error_reporting E_ALL

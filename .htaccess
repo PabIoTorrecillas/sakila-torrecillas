@@ -1,4 +1,3 @@
-RewriteEngine On
 
 # Redireccionar a login si se accede a la raíz
 RewriteCond %{REQUEST_FILENAME} !-f
